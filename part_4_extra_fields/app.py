@@ -6,6 +6,7 @@ import model
 def main():
     db.setup()
     db.create_heroes()
+    db.update_heroes()
 
 if __name__ == "__main__":
     main()

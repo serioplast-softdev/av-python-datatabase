@@ -40,3 +40,16 @@ def create_heroes():
                     team.name,
                     link.hero.name,
                     "" if link.is_training else "not "))
+
+def update_heroes():
+    with Session(_engine) as session:
+        hero_spider_boy = session.exec(select(Hero).where(Hero.name == "Spider-Boy")).one()
+        team_z_force = session.exec(select(Team).where(Team.name == "Z-Force")).one()
+        link_spider_boy_z_force = HeroTeamLink(hero=hero_spider_boy, team=team_z_force)
+        session.add(link_spider_boy_z_force)
+        session.commit()
+        for link in hero_spider_boy.team_links:
+            print("\"{}\" belongs to team \"{}\" and {}".format(
+                hero_spider_boy.name,
+                link.team.name,
+                "is training" if link.is_training else "is not training"))
